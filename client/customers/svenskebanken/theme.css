@@ -1,0 +1,88 @@
+/* SvenskeBanken — established, precise, bank-like.
+   Deep navy + warm cream, hard edges, ledger-style rules, restrained gold hairline accents. */
+
+:root {
+  /* Type */
+  --font-sans: "Aptos", "Segoe UI", Arial, sans-serif;
+  --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --heading-weight: 700;
+  --heading-tracking: -0.01em;
+  --brand-tracking: 0.04em;
+  --brand-case: uppercase;
+  --label-tracking: 0.04em;
+  --label-case: uppercase;
+  --button-tracking: 0.03em;
+  --button-case: uppercase;
+
+  /* Palette */
+  --ink: #102a43;
+  --canvas: #f7f1e5;
+  --surface: #ffffff;
+  --border: #d9cfbf;
+  --primary: #174e7a;
+  --primary-strong: #123b5c;
+  --muted: #52677a;
+  --muted-soft: #7c8a99;
+  --on-primary: #ffffff;
+  --gold: #a9843c;
+
+  /* Shape: hard edges throughout */
+  --radius-control: 2px;
+  --radius-panel: 2px;
+  --radius-badge: 2px;
+
+  /* Surfaces: flat, ruled, no shadow */
+  --shadow-panel: none;
+  --panel-border: 1px solid var(--border);
+  --card-border: 1px solid var(--border);
+  --table-head-border: 2px solid var(--ink);
+  --row-hover: color-mix(in srgb, var(--primary) 4%, transparent);
+  --panel-heading-border: 1px solid var(--border);
+  --panel-heading-gap: 12px;
+
+  --header-bg: var(--ink);
+  --header-ink: #f7f1e5;
+  --header-border: none;
+  --header-accent-height: 3px;
+  --header-accent-offset: -3px;
+  --header-accent-color: var(--gold);
+
+  --login-bg: var(--canvas);
+  --login-intro-border: 2px solid var(--ink);
+  --login-intro-accent-width: 64px;
+  --login-intro-accent-height: 3px;
+  --login-intro-accent-color: var(--gold);
+  --login-max-width: 920px;
+  --selection-bg: color-mix(in srgb, var(--primary) 7%, var(--surface));
+  --card-selected-accent: 3px solid var(--gold);
+  --card-hover-lift: none;
+  --marker-radius: 0;
+  --marker-size: 16px;
+  --marker-inset: 3px;
+
+  --nav-underline-width: 2px;
+
+  --metric-bg: var(--surface);
+  --accent-panel-bg: #ffffff;
+
+
+  --notice-bg: #eaf3fa;
+  --notice-border-color: #b9d5e8;
+  --notice-mark: var(--gold);
+
+  --focus-ring: #a9843c;
+
+  /* Status */
+  --status-positive-bg: #e8f5ed;
+  --status-positive-ink: #18794e;
+  --status-pending-bg: #fff1d6;
+  --status-pending-ink: #8f5200;
+  --status-attention-bg: #fbe4e1;
+  --status-attention-ink: #b42318;
+  --status-neutral-bg: #eef1f4;
+  --status-neutral-ink: #52677a;
+
+  --color-success: #18794e;
+  --color-warning: #a85f00;
+  --color-danger: #b42318;
+}

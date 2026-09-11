@@ -1,0 +1,6 @@
+node_modules/
+client/dist/
+server/.gradle/
+server/**/build/
+.cocoindex_code/
+.idea/
