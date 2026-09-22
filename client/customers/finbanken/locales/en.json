@@ -298,5 +298,19 @@
   "Inga företag kopplade": "No companies assigned",
   "Systemadministratör": "System administrator",
   "System administrator with an overview of company administrators.": "System administrator with an overview of company administrators.",
-  "No company administrators": "No company administrators"
+  "No company administrators": "No company administrators",
+  "Åtgärdsbehörigheter": "Action permissions",
+  "Ge eller ta bort behörighet för varje demoprofil att utföra specifika åtgärder i företagsportalen. En profil utan någon behörighet kan inte logga in i företagsportalen.": "Grant or remove permission for each demo profile to perform specific actions in the company portal. A profile without any granted permission cannot sign in to the company portal.",
+  "Demoprofil": "Demo profile",
+  "Inga demoprofiler": "No demo profiles",
+  "Det finns inga demoprofiler att administrera i den här kundvarianten.": "There are no demo profiles to administer in this customer variant.",
+  "Läsa": "Read",
+  "Godkänna ärenden": "Approve cases",
+  "Lägga till medarbetare": "Add employee",
+  "Ändra lön": "Change salary",
+  "Registrera ledighet": "Register leave",
+  "Avsluta anställning": "End employment",
+  "Behörigheten kunde inte sparas.": "The permission could not be saved.",
+  "Har inte tillgång till företagsportalen": "Does not have access to the company portal",
+  "Denna demoprofil saknar tillgång till företagsportalen och kan inte tilldelas åtgärder där.": "This demo profile has no access to the company portal and cannot be granted actions there."
 }

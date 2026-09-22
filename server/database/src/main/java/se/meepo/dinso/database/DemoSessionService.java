@@ -11,14 +11,21 @@ import se.meepo.dinso.service.*;
 @Service
 @Transactional
 public class DemoSessionService {
-  private final DemoProfileRepository profiles; private final DemoSessionRepository sessions; private final DemoJwtService jwt; private final Clock clock;
-  public DemoSessionService(DemoProfileRepository profiles, DemoSessionRepository sessions, DemoJwtService jwt, Clock clock) { this.profiles = profiles; this.sessions = sessions; this.jwt = jwt; this.clock = clock; }
+  private final DemoProfileRepository profiles; private final DemoSessionRepository sessions; private final DemoJwtService jwt; private final Clock clock; private final ProfileActionGrantService grants;
+  public DemoSessionService(DemoProfileRepository profiles, DemoSessionRepository sessions, DemoJwtService jwt, Clock clock, ProfileActionGrantService grants) { this.profiles = profiles; this.sessions = sessions; this.jwt = jwt; this.clock = clock; this.grants = grants; }
   public DemoProfile login(CustomerId customer, String profileId) {
-    return profiles.findByCustomerIdAndExternalId(customer, profileId).orElseThrow(() -> new IllegalArgumentException("Unknown demo profile")).toDomain();
+    var profile = profiles.findByCustomerIdAndExternalId(customer, profileId).orElseThrow(() -> new IllegalArgumentException("Unknown demo profile")).toDomain();
+    requireCompanyPortalActionsIfApplicable(profile);
+    return profile;
   }
   public String createSession(CustomerId customer, String profileId) {
-    var profile = profiles.findByCustomerIdAndExternalId(customer, profileId).orElseThrow(() -> new IllegalArgumentException("Unknown demo profile"));
-    var sessionId = UUID.randomUUID().toString(); var expiresAt = clock.instant().plus(Duration.ofHours(2)); sessions.save(new DemoSessionEntity(sessionId, profile, expiresAt)); return jwt.issue(sessionId, customer, expiresAt);
+    var entity = profiles.findByCustomerIdAndExternalId(customer, profileId).orElseThrow(() -> new IllegalArgumentException("Unknown demo profile"));
+    requireCompanyPortalActionsIfApplicable(entity.toDomain());
+    var sessionId = UUID.randomUUID().toString(); var expiresAt = clock.instant().plus(Duration.ofHours(2)); sessions.save(new DemoSessionEntity(sessionId, entity, expiresAt)); return jwt.issue(sessionId, customer, expiresAt);
+  }
+  /** A demo profile whose portal is COMPANY must have at least one granted action to read the company portal at all. Private and system portal profiles are unaffected. */
+  private void requireCompanyPortalActionsIfApplicable(DemoProfile profile) {
+    if (profile.portal() == PortalType.COMPANY && grants.hasNoGrants(profile)) throw new SecurityException("Profilen har inga tilldelade åtgärdsbehörigheter och kan inte logga in i företagsportalen");
   }
   public DemoProfile requireActive(String token) {
     var claims = jwt.verify(token);

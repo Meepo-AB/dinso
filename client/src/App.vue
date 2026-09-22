@@ -24,7 +24,7 @@ import InsuranceView from './views/InsuranceView.vue'
 import PlansView from './views/PlansView.vue'
 import CasesView from './views/CasesView.vue'
 import ActivityView from './views/ActivityView.vue'
-import SystemAdminView from './views/SystemAdminView.vue'
+import SystemAdminView, { type ActionOption, type PermissionProfile } from './views/SystemAdminView.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -128,6 +128,31 @@ const companyAdmins = computed<Record<string, string>[]>(() => customer.profiles
     name: item.name,
     companies: (item.companies?.length ? item.companies : item.company ? [item.company] : []).join(', ') || t('Inga företag kopplade'),
   })))
+
+const companyActionCodes = ['READ', 'APPROVE_CASE', 'ADD_EMPLOYEE', 'CHANGE_SALARY', 'REGISTER_LEAVE', 'END_EMPLOYMENT'] as const
+const actionLabels: Record<typeof companyActionCodes[number], string> = {
+  READ: 'Läsa',
+  APPROVE_CASE: 'Godkänna ärenden',
+  ADD_EMPLOYEE: 'Lägga till medarbetare',
+  CHANGE_SALARY: 'Ändra lön',
+  REGISTER_LEAVE: 'Registrera ledighet',
+  END_EMPLOYMENT: 'Avsluta anställning',
+}
+const companyActionOptions = computed<ActionOption[]>(() => companyActionCodes.map(code => ({ code, label: t(actionLabels[code]) })))
+
+/**
+ * Mirrors the server-side check in `CompanyPortalController.current()`: only a profile whose
+ * portal(s) include COMPANY, or a SYSTEM_ADMIN (who can act across all customers' companies),
+ * can ever reach the company portal — so granting company actions to anyone else would be a
+ * no-op. Used to disable those checkboxes in the admin GUI instead of letting them silently do
+ * nothing.
+ */
+function canUseCompanyPortal(item: { portal: Profile['portal']; portals?: Profile['portal'][]; role: Profile['role'] }): boolean {
+  return (item.portals?.includes('COMPANY') ?? item.portal === 'COMPANY') || item.role === 'SYSTEM_ADMIN'
+}
+
+const permissionProfiles = ref<PermissionProfile[]>(customer.profiles.map(item => ({ id: item.id, name: item.name, roleLabel: roleLabel(item), actions: [], canUseCompanyPortal: canUseCompanyPortal(item) })))
+const savingPermissionProfileId = ref<string | null>(null)
 
 const employees = computed(() => companyEmployees.value.filter(item => item.name.toLowerCase().includes(search.value.toLowerCase())))
 const companyPlanOptions = computed(() => companyContext.value.plans.length > 0
@@ -283,6 +308,39 @@ const portals = computed(() => [
   { id: 'SYSTEM' as Portal, title: t('Systemadmin'), description: t('Se företagsadministratörer och vilka företag de hanterar.'), available: selectedProfile.value?.portals?.includes('SYSTEM') ?? selectedProfile.value?.portal === 'SYSTEM' },
 ])
 
+async function loadSystemAdminProfiles() {
+  const headers = { Authorization: `Bearer ${sessionToken.value}` }
+  const response = await fetch(`${apiUrl}/api/system/profiles`, { headers })
+  if (!response.ok) return
+  const result = await response.json() as { id: string; name: string; role: Profile['role']; portal: Profile['portal']; actions: string[] }[]
+  permissionProfiles.value = result.map(item => ({ id: item.id, name: item.name, roleLabel: roleLabel({ role: item.role } as Profile), actions: item.actions, canUseCompanyPortal: canUseCompanyPortal(item) }))
+}
+
+async function toggleProfileAction(profileId: string, action: string, granted: boolean) {
+  const target = permissionProfiles.value.find(item => item.id === profileId)
+  if (!target) return
+  const nextActions = granted ? [...new Set([...target.actions, action])] : target.actions.filter(item => item !== action)
+
+  if (!useApi) {
+    target.actions = nextActions
+    return
+  }
+
+  savingPermissionProfileId.value = profileId
+  try {
+    const response = await fetch(`${apiUrl}/api/system/profiles/${profileId}/actions`, {
+      method: 'PUT',
+      headers: { Authorization: `Bearer ${sessionToken.value}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ actions: nextActions }),
+    })
+    if (!response.ok) { actionMessage.value = t('Behörigheten kunde inte sparas.'); return }
+    const saved = await response.json() as { actions: string[] }
+    target.actions = saved.actions
+  } finally {
+    savingPermissionProfileId.value = null
+  }
+}
+
 function roleLabel(item: Profile) {
   return t(item.role === 'SYSTEM_ADMIN' ? 'Systemadministratör' : item.role === 'COMPANY_VIEWER' ? 'Läsbehörighet' : item.role === 'COMPANY_ADMIN' ? 'Företagsadmin' : 'Privatkund')
 }
@@ -308,6 +366,7 @@ async function login(selected: Profile) {
   allocation.value = allocationsByProfile.get(selected.id) ?? 60
   if (useApi && portal === 'COMPANY') await loadCompanyContext()
   if (useApi && portal === 'PRIVATE') await loadPrivateContext()
+  if (useApi && portal === 'SYSTEM') await loadSystemAdminProfiles()
 }
 
 async function logout() {
@@ -511,7 +570,13 @@ watch(page, nextPage => { if (useApi && activePortal.value === 'PRIVATE' && ['ev
         :panel-title="t('Företagsadministratörer')"
         :panel-description="t('Här visas företagsadministratörer i den valda kundvariantens demo-data.')"
         :rows="companyAdmins"
+        :permissions-title="t('Åtgärdsbehörigheter')"
+        :permissions-description="t('Ge eller ta bort behörighet för varje demoprofil att utföra specifika åtgärder i företagsportalen. En profil utan någon behörighet kan inte logga in i företagsportalen.')"
+        :action-options="companyActionOptions"
+        :profiles="permissionProfiles"
+        :saving-id="savingPermissionProfileId"
         :t="t"
+        @toggle-action="toggleProfileAction"
       />
 
       <OverviewView
