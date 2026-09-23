@@ -1,0 +1,14 @@
+{
+  "name": "dinso-client",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "validate:customers": "node scripts/validate-customers.mjs",
+    "build": "npm run validate:customers && vite build",
+    "build:all": "npm run build -- --mode svenskebanken && npm run build -- --mode pensionsbolaget && npm run build -- --mode finbanken",
+    "typecheck": "vue-tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": { "pinia": "4.0.3", "vue": "3.5.41", "vue-router": "5.2.0" },
+  "devDependencies": { "@vitejs/plugin-vue": "6.0.8", "typescript": "6.0.3", "vite": "8.2.1", "vue-tsc": "3.3.10" }
+}

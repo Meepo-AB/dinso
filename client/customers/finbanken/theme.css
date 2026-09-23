@@ -1,0 +1,93 @@
+/* FinBanken — clear, contemporary, investment-oriented.
+   Light blue + cool white, neutral corners, calm contrast, minimal decoration. */
+
+:root {
+  /* Type */
+  --font-sans: "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+  --heading-weight: 700;
+  --heading-tracking: -0.02em;
+  --brand-tracking: -0.01em;
+  --brand-case: none;
+  --label-tracking: 0.02em;
+  --label-case: uppercase;
+  --button-tracking: 0;
+  --button-case: none;
+
+  /* Palette */
+  --ink: #1e334a;
+  --canvas: #f7fafc;
+  --surface: #ffffff;
+  --border: #d7e0e8;
+  --primary: #3b82b6;
+  --primary-strong: #286a9a;
+  /* Default primary is a UI-only accent (3:1 is sufficient); buttons carrying white text need AA text contrast, so they use the darker shade. */
+  --button-bg: var(--primary-strong);
+  --button-bg-hover: #1f4f74;
+  --muted: #597086;
+  --muted-soft: #8398ac;
+  --on-primary: #ffffff;
+
+  /* Shape: neutral, between sharp and soft */
+  --radius-control: 7px;
+  --radius-panel: 8px;
+  --radius-badge: 6px;
+
+  /* Surfaces: clean white, thin borders, faint elevation only where useful */
+  --shadow-panel: 0 1px 2px color-mix(in srgb, var(--ink) 6%, transparent);
+  --panel-border: 1px solid var(--border);
+  --card-border: 1px solid var(--border);
+  --table-head-border: 1px solid var(--border);
+  --row-hover: color-mix(in srgb, var(--primary) 4%, transparent);
+  --panel-heading-border: none;
+  --panel-heading-gap: 0;
+
+  --header-bg: var(--surface);
+  --header-ink: var(--ink);
+  --header-border: 1px solid var(--border);
+  --header-accent-height: 0;
+  --header-accent-offset: 0;
+  --header-accent-color: transparent;
+
+  --login-bg: var(--canvas);
+  --login-intro-border: 1px solid var(--border);
+  --login-intro-accent-width: 0;
+  --login-intro-accent-height: 0;
+  --login-intro-accent-color: transparent;
+  --login-max-width: 880px;
+  --selection-bg: color-mix(in srgb, var(--primary) 6%, var(--surface));
+  --card-selected-accent: 1px solid var(--primary);
+  --card-hover-lift: none;
+  --shadow-panel-hover: 0 4px 12px -4px color-mix(in srgb, var(--ink) 14%, transparent);
+  --marker-radius: 4px;
+  --marker-size: 16px;
+  --marker-inset: 4px;
+
+  --nav-gap: 2px;
+  --nav-item-padding: 12px 14px;
+  --nav-underline-width: 2px;
+
+  --metric-bg: var(--surface);
+  --accent-panel-bg: var(--surface);
+
+
+  --notice-bg: #eaf3fa;
+  --notice-border-color: #cfe1ee;
+  --notice-mark: var(--primary);
+
+  --focus-ring: #3b82b6;
+
+  /* Status */
+  --status-positive-bg: #e8f5ed;
+  --status-positive-ink: #18794e;
+  --status-pending-bg: #fff1d6;
+  --status-pending-ink: #8f5200;
+  --status-attention-bg: #fbe4e1;
+  --status-attention-ink: #b42318;
+  --status-neutral-bg: #eef2f6;
+  --status-neutral-ink: #597086;
+
+  --color-success: #18794e;
+  --color-warning: #a85f00;
+  --color-danger: #b42318;
+}
