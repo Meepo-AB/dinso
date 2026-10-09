@@ -1,0 +1,2 @@
+rootProject.name = 'dinso-server'
+include 'service', 'database', 'api', 'springconfig', 'customers:svenskebanken', 'customers:pensionsbolaget', 'customers:finbanken'

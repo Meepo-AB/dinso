@@ -1,0 +1,103 @@
+/* PensionsBolaget — warm, long-term, people-centred.
+   Forest green + soft beige, generous rounded shapes, gentle tonal panels, diffuse shadow. */
+
+:root {
+  /* Type */
+  --font-sans: "Avenir Next", Avenir, "Segoe UI", Arial, sans-serif;
+  --font-display: "Avenir Next", Avenir, "Segoe UI", Arial, sans-serif;
+  --heading-weight: 700;
+  --heading-tracking: -0.01em;
+  --brand-tracking: -0.01em;
+  --brand-case: none;
+  --label-tracking: 0;
+  --label-case: none;
+  --button-tracking: 0;
+  --button-case: none;
+
+  /* Palette */
+  --ink: #173f35;
+  --canvas: #f3eee4;
+  --surface: #fffcf7;
+  --border: #d8d1c5;
+  --primary: #28755d;
+  --primary-strong: #1e5b47;
+  --muted: #5d6b65;
+  --muted-soft: #82918a;
+  --on-primary: #ffffff;
+  --clay: #c98a56;
+
+  /* Shape: soft, rounded throughout */
+  --radius-control: 12px;
+  --radius-panel: 16px;
+  --radius-badge: 999px;
+
+  /* Surfaces: gentle tonal panels, diffuse shadow, minimal hard rules */
+  --shadow-panel: 0 8px 24px -12px color-mix(in srgb, var(--ink) 28%, transparent);
+  --panel-border: 1px solid var(--border);
+  --card-border: 1px solid var(--border);
+  --table-head-border: 1px solid var(--border);
+  --row-hover: color-mix(in srgb, var(--primary) 5%, transparent);
+  --panel-heading-border: none;
+  --panel-heading-gap: 0;
+
+  --header-bg: var(--primary);
+  --header-ink: #fbf7ee;
+  --header-border: none;
+  --header-accent-height: 46px;
+  --header-accent-offset: -30px;
+  --header-accent-color: radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--clay) 55%, transparent), transparent 70%);
+
+  --login-bg: var(--canvas);
+  --login-intro-border: none;
+  --login-intro-accent-width: 88px;
+  --login-intro-accent-height: 6px;
+  --login-intro-accent-color: var(--clay);
+  --login-max-width: 920px;
+  --selection-bg: color-mix(in srgb, var(--primary) 9%, var(--surface));
+  --card-selected-accent: 1px solid var(--primary);
+  --card-hover-lift: translateY(-2px);
+  --shadow-panel-hover: 0 14px 32px -14px color-mix(in srgb, var(--ink) 34%, transparent);
+  --marker-radius: 50%;
+  --marker-size: 20px;
+  --marker-inset: 5px;
+
+  --nav-gap: 6px;
+  --nav-item-padding: 10px 18px;
+  --nav-underline-width: 0;
+  --nav-item-margin-bottom: 0;
+  --nav-rule: none;
+  --nav-track-bg: color-mix(in srgb, var(--primary) 6%, transparent);
+  --nav-track-radius: 999px;
+  --nav-padding: 6px;
+  --nav-item-radius: 999px;
+  --nav-active-bg: var(--surface);
+  --nav-active-ink: var(--primary-strong);
+  --nav-active-underline: transparent;
+
+  --metric-bg: var(--surface);
+  --accent-panel-bg: color-mix(in srgb, var(--primary) 7%, var(--surface));
+
+
+  --notice-bg: color-mix(in srgb, var(--primary) 10%, var(--surface));
+  --notice-border-color: color-mix(in srgb, var(--primary) 24%, var(--border));
+  --notice-mark: var(--clay);
+
+  --focus-ring: #c98a56;
+
+  --space-panel-padding: 28px;
+  --space-metric-gap: 20px;
+
+  /* Status */
+  --status-positive-bg: #e8f5ed;
+  --status-positive-ink: #18794e;
+  --status-pending-bg: #fff1d6;
+  --status-pending-ink: #8f5200;
+  --status-attention-bg: #fbe4e1;
+  --status-attention-ink: #b42318;
+  --status-neutral-bg: #eef1f4;
+  --status-neutral-ink: #5d6b65;
+
+  --color-success: #18794e;
+  --color-warning: #a85f00;
+  --color-danger: #b42318;
+}

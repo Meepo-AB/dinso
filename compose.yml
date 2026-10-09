@@ -1,0 +1,45 @@
+services:
+  svenskebanken-api:
+    profiles: [svenskebanken]
+    build:
+      context: ./server
+      args: { CUSTOMER: svenskebanken }
+    ports: ["8081:8080"]
+  svenskebanken-web:
+    profiles: [svenskebanken]
+    depends_on: [svenskebanken-api]
+    build:
+      context: ./client
+      args: { CUSTOMER: svenskebanken, VITE_USE_API: "true" }
+    environment: { API_UPSTREAM: svenskebanken-api:8080 }
+    ports: ["5173:80"]
+
+  pensionsbolaget-api:
+    profiles: [pensionsbolaget]
+    build:
+      context: ./server
+      args: { CUSTOMER: pensionsbolaget }
+    ports: ["8082:8080"]
+  pensionsbolaget-web:
+    profiles: [pensionsbolaget]
+    depends_on: [pensionsbolaget-api]
+    build:
+      context: ./client
+      args: { CUSTOMER: pensionsbolaget, VITE_USE_API: "true" }
+    environment: { API_UPSTREAM: pensionsbolaget-api:8080 }
+    ports: ["5174:80"]
+
+  finbanken-api:
+    profiles: [finbanken]
+    build:
+      context: ./server
+      args: { CUSTOMER: finbanken }
+    ports: ["8083:8080"]
+  finbanken-web:
+    profiles: [finbanken]
+    depends_on: [finbanken-api]
+    build:
+      context: ./client
+      args: { CUSTOMER: finbanken, VITE_USE_API: "true" }
+    environment: { API_UPSTREAM: finbanken-api:8080 }
+    ports: ["5175:80"]

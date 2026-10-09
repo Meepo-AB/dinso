@@ -1,0 +1,107 @@
+:root {
+  font-family: var(--font-sans, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+  color: var(--ink);
+  background: var(--canvas);
+  font-synthesis: none;
+  --color-danger: #B42318;
+  --color-danger-surface: #fdf0ed;
+  --color-danger-border: #e5b8b2;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: var(--canvas);
+  color: var(--ink);
+  overflow-wrap: break-word;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  min-height: 44px;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid var(--focus-ring, #f0b429);
+  outline-offset: 2px;
+}
+
+input,
+select {
+  min-height: 44px;
+}
+
+::selection {
+  background: var(--selection-bg, #cfe0ee);
+  color: var(--ink);
+}
+
+.app {
+  min-height: 100vh;
+}
+
+.button {
+  border: 1px solid var(--button-bg, var(--primary));
+  background: var(--button-bg, var(--primary));
+  color: var(--on-primary, white);
+  padding: var(--button-padding, 11px 18px);
+  border-radius: var(--radius-control);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: var(--button-tracking, 0);
+  text-transform: var(--button-case, none);
+  transition: background-color 0.16s ease, border-color 0.16s ease, transform 0.16s ease;
+}
+
+.button:hover:not(:disabled) {
+  background: var(--button-bg-hover, var(--primary-strong));
+  border-color: var(--button-bg-hover, var(--primary-strong));
+}
+
+.button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  transform: none;
+}
+
+.button.secondary {
+  background: transparent;
+  color: var(--primary);
+}
+
+.button.secondary:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  border-color: var(--primary-strong);
+}
+
+.label {
+  font-size: 0.83rem;
+  color: var(--muted);
+}
+
+.notice {
+  padding: 14px 16px;
+  background: var(--notice-bg, #eaf3fa);
+  border: 1px solid var(--notice-border-color, #b9d5e8);
+  border-radius: var(--radius-control);
+  margin-top: 24px;
+  line-height: 1.5;
+}

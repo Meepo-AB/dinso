@@ -1,0 +1,2 @@
+plugins { id 'org.springframework.boot' }
+dependencies { implementation project(':service'); implementation project(':api'); implementation project(':database'); implementation project(':springconfig'); implementation 'org.springframework.boot:spring-boot-starter'; testImplementation 'org.springframework.boot:spring-boot-starter-test' }
